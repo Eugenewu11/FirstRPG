@@ -175,10 +175,10 @@ TextureImporter:
       name: M_Spawn_0
       rect:
         serializedVersion: 2
-        x: 42
-        y: 42
-        width: 46
-        height: 46
+        x: 0
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,10 +197,10 @@ TextureImporter:
       name: M_Spawn_1
       rect:
         serializedVersion: 2
-        x: 164
-        y: 28
-        width: 58
-        height: 66
+        x: 128
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,10 +219,10 @@ TextureImporter:
       name: M_Spawn_2
       rect:
         serializedVersion: 2
-        x: 295
-        y: 79
-        width: 27
-        height: 18
+        x: 256
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -241,10 +241,10 @@ TextureImporter:
       name: M_Spawn_3
       rect:
         serializedVersion: 2
-        x: 297
-        y: 44
-        width: 45
-        height: 50
+        x: 384
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,10 +263,10 @@ TextureImporter:
       name: M_Spawn_4
       rect:
         serializedVersion: 2
-        x: 335
-        y: 54
-        width: 17
-        height: 38
+        x: 512
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -285,10 +285,10 @@ TextureImporter:
       name: M_Spawn_5
       rect:
         serializedVersion: 2
-        x: 423
-        y: 45
-        width: 54
-        height: 39
+        x: 640
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -307,10 +307,10 @@ TextureImporter:
       name: M_Spawn_6
       rect:
         serializedVersion: 2
-        x: 290
-        y: 44
-        width: 11
-        height: 28
+        x: 768
+        y: 0
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -325,121 +325,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: M_Spawn_7
-      rect:
-        serializedVersion: 2
-        x: 303
-        y: 28
-        width: 37
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d3094bca8ffa6e230800000000000000
-      internalID: 3667812429124112445
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: M_Spawn_8
-      rect:
-        serializedVersion: 2
-        x: 436
-        y: 28
-        width: 33
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dfa03189d2d773060800000000000000
-      internalID: 6933147786138553085
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: M_Spawn_9
-      rect:
-        serializedVersion: 2
-        x: 547
-        y: 29
-        width: 65
-        height: 31
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fadb33d44cb4a9b60800000000000000
-      internalID: 7753593014952639919
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: M_Spawn_10
-      rect:
-        serializedVersion: 2
-        x: 685
-        y: 28
-        width: 45
-        height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: eece53b4dd595eb80800000000000000
-      internalID: -8366115955088691986
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: M_Spawn_11
-      rect:
-        serializedVersion: 2
-        x: 809
-        y: 27
-        width: 53
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4461c6ec1d0af9c80800000000000000
-      internalID: -8313749564130847164
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 985dd3bf041a8482b9d76a82691866ad
     internalID: 0
     vertices: []
     indices: 
@@ -451,16 +341,11 @@ TextureImporter:
     nameFileIdTable:
       M_Spawn_0: 3498063503139651976
       M_Spawn_1: 6520460431258965811
-      M_Spawn_10: -8366115955088691986
-      M_Spawn_11: -8313749564130847164
       M_Spawn_2: -1122592425472363717
       M_Spawn_3: -4112147455562471226
       M_Spawn_4: -5147735771709780924
       M_Spawn_5: -9112186978602087139
       M_Spawn_6: 5925288531732966603
-      M_Spawn_7: 3667812429124112445
-      M_Spawn_8: 6933147786138553085
-      M_Spawn_9: 7753593014952639919
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
