@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 4153644344471615372}
   - component: {fileID: 413375377022643870}
   - component: {fileID: 488465565130248596}
-  m_Layer: 0
+  - component: {fileID: -4755354021824982957}
+  m_Layer: 6
   m_Name: EnemyTorchRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff367ba6908e5429198d3d33eb60b1e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
   targetTransform: {fileID: 0}
 --- !u!95 &413375377022643870
 Animator:
@@ -223,3 +223,19 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-4755354021824982957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315140767933105427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3dc5bb9c72be494b942ba7f288800d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  itemToDrop: {fileID: 4021494466467517813, guid: 68fcb4f242f714b6d88a6997f08219ff, type: 3}
+  rb2d: {fileID: 5989121924550120474}
+  forceImpulse: 5
