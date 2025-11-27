@@ -221,13 +221,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa7b41fe8c304d6198fcf14708d1ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementType: 1
   animatorControllers:
   - {fileID: 9100000, guid: 3698950d633564c09a66db0ef5fa361b, type: 2}
   - {fileID: 9100000, guid: e68fa56243db94193b5dd502e59adc1e, type: 2}
   - {fileID: 9100000, guid: f40ab0843577848da8650f9adba541b5, type: 2}
   - {fileID: 9100000, guid: 0de2896557ff14587bf4c97dd918741b, type: 2}
   selectedSkin: 0
-  movementType: 0
   pathPoints:
   - {fileID: 0}
   - {fileID: 0}

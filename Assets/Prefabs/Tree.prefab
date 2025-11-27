@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8154089401249029366}
   - component: {fileID: 2979955798254178066}
   - component: {fileID: 2988034851897280105}
-  m_Layer: 0
+  - component: {fileID: 7532485243164039698}
+  m_Layer: 8
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,3 +158,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7532485243164039698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914572207915692778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3dc5bb9c72be494b942ba7f288800d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  itemToDrop:
+  - {fileID: 7022993058247097590, guid: e46344b5882f347c9a28c535a1628316, type: 3}
+  - {fileID: 1840252748892105148, guid: e16e4545632ea4e7a82f4e1969dd2d41, type: 3}
+  forceImpulse: 5

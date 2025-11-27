@@ -8,10 +8,6 @@ public class PlayerMovement : MonoBehaviour
     // Velocidad de movimiento del jugador
     public float speed = 3;
 
-    // Variables de salud del jugador
-    public int currentHealth;
-    public int maxHealth = 100;
-
     // Controla si el juego está pausado
     private bool gameIsPaused = false;
 
@@ -28,12 +24,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isAttacking = false;
 
     //Variable para controlar el movimiento durante el ataque
-    private bool canMove = true;
+    [HideInInspector]
+    public bool canMove = true;
 
     Vector2 lastMovementDir = Vector2.right;
     Vector2 attackDir;
     public float attackRange = 1.1f;
-    public LayerMask enemyLayer;
+    public LayerMask targetLayer;
 
 
     void Start()
@@ -43,25 +40,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Obtenemos el Animator del jugador
         animator = GetComponent<Animator>();
-
-        // Inicializamos la salud del jugador
-        currentHealth = maxHealth;
-
-        // Actualizamos la barra de vida en el UI
-        UIManager.Instance.updateHealth(currentHealth);
+        
     }
 
     void Update()
     {
-        if(isAttacking)
-        {
-            canMove = false;
-        }
-        else
-        {
-            canMove = true;
-        }
-
         if(movementInput != Vector2.zero)
         {
             lastMovementDir = movementInput;
@@ -89,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         // Abrir/cerrar el menú de pausa con Escape
         OpenClosePauseMenu();
 
+        OpenCloseStatsPlayer();
         Attack();
     }
 
@@ -100,12 +84,6 @@ public class PlayerMovement : MonoBehaviour
             // Aplicamos movimiento al jugador usando física
             rb2d.linearVelocity = movementInput * speed;
         }
-        else
-        {
-            rb2d.linearVelocity = Vector2.zero;
-        }
-
-
     }
 
     // Invierte la escala del sprite para mirar a izquierda o derecha
@@ -130,6 +108,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             UIManager.Instance.OpenOrCloseInventory();
+        }
+    }
+
+    void OpenCloseStatsPlayer()
+    {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            UIManager.Instance.OpenOrCloseStatsPlayer();
         }
     }
 
@@ -171,11 +157,14 @@ public class PlayerMovement : MonoBehaviour
     public void startAttack()
     {
         isAttacking = true;
+        rb2d.linearVelocity = Vector2.zero;
+        canMove = false;
     }
 
     public void endAttack()
     {
         isAttacking = false;
+        canMove = true;
     }
 
     Vector2 GetAttackInputDirection()
@@ -209,23 +198,36 @@ public class PlayerMovement : MonoBehaviour
         {
             return dir.y > 0 ? 2 : 3; // Arriba : Abajo
         }
-        
     }
 
 
-    public void DetectAndDamageEnemies()
+    public void DetectAndDamageTargets()
     {
         Vector2 attackPoint = (Vector2)transform.position + attackDir.normalized * attackRange * 0.5f;
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint,attackRange,enemyLayer);
+        Collider2D[] hitTargets = Physics2D.OverlapCircleAll(attackPoint,attackRange,targetLayer);
 
-        foreach(Collider2D enemy in hitEnemies)
+        foreach(Collider2D target in hitTargets)
         {
-            DamageReceiver damageReceiver = enemy.GetComponent<DamageReceiver>();
-            if(damageReceiver != null)
+            Vector2 hitDirection = target.transform.position - transform.position;
+            GameObject obj = target.gameObject;
+            int layer = obj.layer;
+
+            DamageReceiver damageReceiver = target.GetComponent<DamageReceiver>();
+
+            if (layer == LayerMask.NameToLayer("Enemy"))
             {
-                Vector2 hitDirection = enemy.transform.position - transform.position;
-                damageReceiver.applyDamage(1,true,false,hitDirection);
+                obj.GetComponent<DamageReceiver>().applyDamage(2,true,false,hitDirection);
+            } 
+            else if (layer == LayerMask.NameToLayer("Sheep"))
+            {
+                obj.GetComponent<DamageReceiver>().applyDamage(2,true,false,hitDirection);
             }
+            else if (layer == LayerMask.NameToLayer("Tree"))
+            {
+                obj.GetComponent<DamageReceiver>().applyDamage(1,false,true,hitDirection);
+            }
+
+
         }
     }
 }

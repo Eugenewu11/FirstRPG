@@ -1,66 +1,117 @@
 using UnityEngine;
-using UnityEngine.AI;  
+using UnityEngine.AI;
+using System.Collections.Generic;
 // Importa el sistema de navegación de Unity (NavMeshAgent).
 // Permite usar SetDestination, velocity, desiredVelocity, etc.
 
-public class Enemy : MonoBehaviour
+public class Enemy : NPC
 {
-    
-    // Referencia al Rigidbody2D de enemigo
-    private Rigidbody2D rb2d;  
+    public float attackRange = 1.5f;
+    public float stopDistance = 0.5f;
+    public float attackCooldown = 2f;
 
-    // El objetivo que el enemigo seguirá (por ej., el jugador).
-    public Transform targetTransform;  
-    
+    private float lastAttackTime = 0;
+    private bool isAttacking = false;
+    private bool canMove = true;
 
-    // Componente que controla el movimiento en el NavMesh.
-    NavMeshAgent navMeshAgent;  
-    
-    Animator animator;  
-    // Para controlar animaciones del enemigo (correr, idle, etc.).
+    public LayerMask targetLayer;
+    private Vector2 playerDirection;
 
-    void Start()
+
+    protected override void Start()
     {
-        // Obtiene el Rigidbody2D del enemigo
-        rb2d = GetComponent<Rigidbody2D>();
-
-        // Obtiene el agente de navegación
-        navMeshAgent = GetComponent<NavMeshAgent>();
-
-        // Obtiene el Animator del enemigo
-        animator = GetComponent<Animator>();
-
-        // En un juego 2D, Unity intenta rotar el agente (inútil y molesto). Se desactiva.
-        navMeshAgent.updateRotation = false;
-
-        // El NavMeshAgent usa el eje Y como “arriba” (3D).  
-        // En 2D necesitamos que use X y Y, así que desactivamos el eje Z.
-        navMeshAgent.updateUpAxis = false;
+        base.Start();
     }
 
-    void Update()
+    protected override void Update()
     {
-        // Envía al agente hacia la posición del objetivo (player)
-        navMeshAgent.SetDestination(targetTransform.position);
+        base.Update();
 
-        // Ajusta animaciones y giro del sprite según la velocidad del agente
-        AdjustAnimationsAndRotation();
+        if(playerTransform == null)
+        {
+            return;
+        }
+
+        float distance = Vector3.Distance(transform.position,playerTransform.position);
+
+        if(distance <= attackRange && !isAttacking && Time.time >= lastAttackTime + attackCooldown)
+        {
+            attackPlayer();
+            lastAttackTime = Time.time;
+        }
     }
 
-    public void AdjustAnimationsAndRotation()
+    private void attackPlayer()
     {
-        // Revisa si el enemigo se está moviendo (velocity es vector)
-        bool isMoving = navMeshAgent.velocity.sqrMagnitude > 0.01f;
+        isAttacking = true;
+        canMove = false;
+        navMeshAgent.ResetPath();
 
-        // Activa la animación de running si se mueve
-        animator.SetBool("isRunning", isMoving);
+        playerDirection = (playerTransform.position - transform.position).normalized;
 
-        // Si la velocidad deseada del agente va a la derecha, giramos el sprite normal
-        if(navMeshAgent.desiredVelocity.x > 0.01f)
-            transform.localScale = new Vector3(1, 1, 1);
+        int attackDirection = GetDirectionIndex(playerDirection);
 
-        // Si va hacia la izquierda, invertimos el eje X
-        if(navMeshAgent.desiredVelocity.x < -0.01f)
-            transform.localScale = new Vector3(-1, 1, 1);
+        if(playerTransform.position.x > transform.position.x)
+        {
+            transform.localScale = new Vector3(1,1,1);
+        }
+        else
+        {
+            transform.localScale = new Vector3(-1,1,1);
+        }
+
+        animator.SetInteger("AttackDirection",attackDirection);
+        animator.SetTrigger("DoAttack");
+
+        Invoke("ResetAttack",0.5f);
+    }
+
+    private void ResetAttack()
+    {
+        isAttacking = false;
+        canMove = true;
+    }
+
+    private void FixedUpdate() {
+        navMeshAgent.isStopped = !canMove;
+    }
+
+    private int GetDirectionIndex(Vector2 dir)
+    {
+        if(Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        {
+            return dir.x > 0 ? 0 : 1; // Derecha : Izquierda
+        }
+        else
+        {
+            return dir.y > 0 ? 2 : 3; // Arriba : Abajo
+        }
+    }
+
+    public void DetectAndDamageTargets()
+    {
+        Vector2 attackPoint = (Vector2)transform.position + playerDirection.normalized * attackRange * 0.5f;
+        Collider2D[] hitTargets = Physics2D.OverlapCircleAll(attackPoint,attackRange,targetLayer);
+
+        HashSet<GameObject> damagedTargets = new HashSet<GameObject>();
+        
+        foreach(Collider2D target in hitTargets)
+        {
+            
+            GameObject obj = target.gameObject;
+
+            if(damagedTargets.Contains(obj)){
+                continue;
+            }
+
+            int layer = obj.layer;
+
+            if (layer == LayerMask.NameToLayer("Player"))
+            {
+                Vector2 hitDirection = target.transform.position - transform.position;
+                obj.GetComponent<DamageReceiverPlayer>().applyDamage(1,true,false,hitDirection);
+                damagedTargets.Add(obj);
+            } 
+        }
     }
 }

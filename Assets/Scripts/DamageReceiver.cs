@@ -3,18 +3,21 @@ using UnityEngine;
 public class DamageReceiver : MonoBehaviour
 {
     [Header("Stats")]
-    public int maxHealth = 1;
+    public int maxHealth = 4;
     private int currentHealth;
 
     [Header("Drop")]
-    public GameObject itemToDrop;
+    public GameObject[] itemToDrop;
 
-    public Rigidbody2D rb2d;
+    private Rigidbody2D rb2d;
+    private Animator animator;
 
     public float forceImpulse = 5f;
 
     void Start()
     {
+        rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         currentHealth = maxHealth;
     }
 
@@ -32,7 +35,7 @@ public class DamageReceiver : MonoBehaviour
 
         if (applyHitAnimation)
         {
-            
+            animator.SetTrigger("Hit");
         }
 
         if(currentHealth <=0)
@@ -50,7 +53,11 @@ public class DamageReceiver : MonoBehaviour
 
     void DropLoot()
     {
-        Instantiate(itemToDrop, transform.position + Vector3.up, Quaternion.identity);
+        for(int i=0; i < itemToDrop.Length; i++)
+        {
+            Instantiate(itemToDrop[i], transform.position, Quaternion.identity);
+        }
+        
     }
 
     void Die()

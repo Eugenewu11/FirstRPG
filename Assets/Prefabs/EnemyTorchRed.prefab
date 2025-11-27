@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 6284383875157860158}
   - component: {fileID: 2360029230116782407}
   - component: {fileID: 5989121924550120474}
-  - component: {fileID: 4153644344471615372}
   - component: {fileID: 413375377022643870}
   - component: {fileID: 488465565130248596}
   - component: {fileID: -4755354021824982957}
+  - component: {fileID: 5696404038285583617}
   m_Layer: 6
   m_Name: EnemyTorchRed
   m_TagString: Untagged
@@ -166,19 +166,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4153644344471615372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2315140767933105427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff367ba6908e5429198d3d33eb60b1e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetTransform: {fileID: 0}
 --- !u!95 &413375377022643870
 Animator:
   serializedVersion: 7
@@ -236,6 +223,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
-  itemToDrop: {fileID: 4021494466467517813, guid: 68fcb4f242f714b6d88a6997f08219ff, type: 3}
-  rb2d: {fileID: 5989121924550120474}
+  itemToDrop:
+  - {fileID: 4021494466467517813, guid: 68fcb4f242f714b6d88a6997f08219ff, type: 3}
   forceImpulse: 5
+--- !u!114 &5696404038285583617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315140767933105427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff367ba6908e5429198d3d33eb60b1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementType: 0
+  animatorControllers: []
+  selectedSkin: 0
+  pathPoints:
+  - {fileID: 0}
+  waitTimeAtPoint: 5

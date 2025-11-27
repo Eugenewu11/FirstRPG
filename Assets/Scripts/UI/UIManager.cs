@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject inventory;
     public GameObject pauseMenu;
+    public GameObject statsPanel;
 
     public TMP_Text moneyCounterTxt;
     public TMP_Text meatCounterTxt;
@@ -33,7 +34,19 @@ public class UIManager : MonoBehaviour
 
     public void OpenOrCloseInventory()
     {
-        inventory.SetActive(!inventory.activeSelf);
+        Debug.Log("OpenOrCloseInventory llamado");
+        Debug.Log("inventory: " + inventory);
+        Debug.Log("inventory.activeSelf ANTES: " + inventory.activeSelf);
+        
+        if (inventory != null)
+            inventory.SetActive(!inventory.activeSelf);
+        
+        Debug.Log("inventory.activeSelf DESPUÉS: " + inventory.activeSelf);
+    }
+
+    public void OpenOrCloseStatsPlayer()
+    {
+        statsPanel.SetActive(!statsPanel.activeSelf);
     }
 
     public void updateMoneyCounter(int amount)
