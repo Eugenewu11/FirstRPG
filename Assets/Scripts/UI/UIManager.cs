@@ -1,5 +1,6 @@
 using TMPro;
-using UnityEngine;  
+using UnityEngine;
+using UnityEngine.UI;  
 
 public class UIManager : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class UIManager : MonoBehaviour
     public TMP_Text meatCounterTxt;
     public TMP_Text woodCounterTxt;
     public TMP_Text healthCounterTxt;
+    public TMP_Text maxHealthText;
+    public TMP_Text speedText;
+    public TMP_Text levelText;
+    public TMP_Text attackDamageText;
+    public Slider xpSlider;
+
 
     private void Awake()
     {
@@ -34,14 +41,7 @@ public class UIManager : MonoBehaviour
 
     public void OpenOrCloseInventory()
     {
-        Debug.Log("OpenOrCloseInventory llamado");
-        Debug.Log("inventory: " + inventory);
-        Debug.Log("inventory.activeSelf ANTES: " + inventory.activeSelf);
-        
-        if (inventory != null)
-            inventory.SetActive(!inventory.activeSelf);
-        
-        Debug.Log("inventory.activeSelf DESPUÉS: " + inventory.activeSelf);
+       inventory.SetActive(!inventory.activeSelf);
     }
 
     public void OpenOrCloseStatsPlayer()
@@ -64,9 +64,18 @@ public class UIManager : MonoBehaviour
         woodCounterTxt.text = amount.ToString();
     }
 
-    public void updateHealth(int value)
+    public void updateHealth(int value, int maxHealthValue)
     {
         healthCounterTxt.text = value.ToString();
+        maxHealthText.text = maxHealthValue.ToString();
+    }
+
+    public void updatePlayerStats(int xpValue, int levelValue, float speedValue,int attackDamageValue)
+    {
+        xpSlider.value = xpValue;
+        levelText.text = levelValue.ToString();
+        speedText.text = speedValue.ToString();
+        attackDamageText.text = attackDamageValue.ToString();
     }
 
     public void PauseGame()

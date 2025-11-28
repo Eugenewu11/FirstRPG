@@ -10,7 +10,7 @@ public class DamageReceiverPlayer : MonoBehaviour
     private Rigidbody2D rb2d;
     private Animator animator;
 
-    public float forceImpulse = 5f;
+    public float forceImpulse = 4f;
 
     void Start()
     {
@@ -19,14 +19,14 @@ public class DamageReceiverPlayer : MonoBehaviour
         currentHealth = maxHealth;
 
         // Actualizamos la barra de vida en el UI
-        UIManager.Instance.updateHealth(currentHealth);
+        UIManager.Instance.updateHealth(currentHealth, maxHealth);
     }
 
     public void applyDamage(int amount,bool applyForceOrNot, bool applyHitAnimation, Vector2 hitDirection)
     {
         currentHealth -=amount;
         // Actualizamos la barra de vida en el UI
-        UIManager.Instance.updateHealth(currentHealth);
+        UIManager.Instance.updateHealth(currentHealth,maxHealth);
 
         if (applyForceOrNot)
         {
@@ -50,6 +50,12 @@ public class DamageReceiverPlayer : MonoBehaviour
     private void ResetMovement()
     {
         GetComponent<PlayerMovement>().canMove = true;
+    }
+
+    public void GainHealth(int healthAmount){
+        maxHealth += healthAmount;
+        currentHealth = maxHealth;
+        UIManager.Instance.updateHealth(currentHealth, maxHealth);
     }
 
     void Die()

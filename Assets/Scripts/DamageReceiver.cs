@@ -13,6 +13,9 @@ public class DamageReceiver : MonoBehaviour
     private Animator animator;
 
     public float forceImpulse = 5f;
+    public int xpOnDeath = 25;
+    public static event System.Action<int> OnTargetKilled;
+
 
     void Start()
     {
@@ -62,6 +65,7 @@ public class DamageReceiver : MonoBehaviour
 
     void Die()
     {
+        OnTargetKilled?.Invoke(xpOnDeath);
         Destroy(gameObject);
     }
 }

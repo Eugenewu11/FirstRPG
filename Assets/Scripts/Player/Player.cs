@@ -30,7 +30,13 @@ public class PlayerMovement : MonoBehaviour
     Vector2 lastMovementDir = Vector2.right;
     Vector2 attackDir;
     public float attackRange = 1.1f;
+    public int attackDamage = 1;
     public LayerMask targetLayer;
+
+    private int xp = 0;
+    [HideInInspector]
+    public int currentLevel = 1;
+
 
 
     void Start()
@@ -40,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Obtenemos el Animator del jugador
         animator = GetComponent<Animator>();
-        
+        UIManager.Instance.updatePlayerStats(xp, currentLevel, speed, attackDamage);
     }
 
     void Update()
@@ -216,18 +222,67 @@ public class PlayerMovement : MonoBehaviour
 
             if (layer == LayerMask.NameToLayer("Enemy"))
             {
-                obj.GetComponent<DamageReceiver>().applyDamage(2,true,false,hitDirection);
+                obj.GetComponent<DamageReceiver>().applyDamage(attackDamage,true,false,hitDirection);
             } 
             else if (layer == LayerMask.NameToLayer("Sheep"))
             {
-                obj.GetComponent<DamageReceiver>().applyDamage(2,true,false,hitDirection);
+                obj.GetComponent<DamageReceiver>().applyDamage(attackDamage,true,false,hitDirection);
             }
             else if (layer == LayerMask.NameToLayer("Tree"))
             {
-                obj.GetComponent<DamageReceiver>().applyDamage(1,false,true,hitDirection);
+                obj.GetComponent<DamageReceiver>().applyDamage(attackDamage,false,true,hitDirection);
             }
+        }
+    }
 
+    void OnEnable()
+    {
+        DamageReceiver.OnTargetKilled += AddExp;
+    }
 
+    void OnDisable(){
+        DamageReceiver.OnTargetKilled -= AddExp;
+    }
+
+    public void AddExp(int xpAmount){
+        xp += xpAmount;
+
+        if(xp > 100){
+            xp -= 100;
+            LevelUp();
+        }
+
+        UIManager.Instance.updatePlayerStats(xp, currentLevel, speed, attackDamage);
+    }
+
+    private void LevelUp(){
+        currentLevel += 1;
+
+        switch(currentLevel){
+            case 2:
+                speed += 1;
+                attackDamage += 1;
+                GetComponent<DamageReceiverPlayer>().GainHealth(1);
+                break;
+            case 3:
+                speed += 1;
+                attackDamage += 2;
+                GetComponent<DamageReceiverPlayer>().GainHealth(1);
+                break;
+            case 4:
+                speed += 1;
+                attackDamage += 2;
+                GetComponent<DamageReceiverPlayer>().GainHealth(1);
+                break;
+            case 5:
+                speed += 11;
+                attackDamage += 1;
+                GetComponent<DamageReceiverPlayer>().GainHealth(1);
+                break;
+            default:
+                speed += 1;
+                attackDamage += 1;
+                break;
         }
     }
 }
