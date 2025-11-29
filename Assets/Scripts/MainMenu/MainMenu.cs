@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -8,8 +9,16 @@ public class MainMenu : MonoBehaviour
     public GameObject buttonsPanel;
     public TMP_Dropdown qualityDropdown;
 
+    public GameObject mainPlayerSkin;
+    public Sprite[] spritesSkins;
+    public string[] skinNames = { "Blue", "Purple", "Red", "Yellow" };
+
+
+
     private void Start()
     {
+        PlayerPrefs.SetString("MainPlayerSkin", skinNames[0]); //Skin por defecto azul
+        
         int savedQuality = PlayerPrefs.GetInt("QualityLevel",-1);
 
         if(savedQuality == -1)
@@ -49,5 +58,10 @@ public class MainMenu : MonoBehaviour
     {
         QualitySettings.SetQualityLevel(index,true);
         PlayerPrefs.SetInt("QualityLevel",index);
+    }
+
+    public void selectSkin(int index){
+        mainPlayerSkin.GetComponent<Image>().sprite = spritesSkins[index];
+        PlayerPrefs.SetString("MainPlayerSkin", skinNames[index]);
     }
 }

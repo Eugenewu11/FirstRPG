@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using UnityEditor.Animations;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -37,7 +38,13 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public int currentLevel = 1;
 
-
+    [Header("Skin")]
+    public AnimatorController[] animatorControllers;
+    public NPCSkin selectedSkin;
+    public enum NPCSkin
+    {
+        Blue, Purple, Red, Yellow
+    }
 
     void Start()
     {
@@ -47,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
         // Obtenemos el Animator del jugador
         animator = GetComponent<Animator>();
         UIManager.Instance.updatePlayerStats(xp, currentLevel, speed, attackDamage);
+
+        applySkin();
     }
 
     void Update()
@@ -284,5 +293,26 @@ public class PlayerMovement : MonoBehaviour
                 attackDamage += 1;
                 break;
         }
+    }
+    void applySkin()
+    {
+        string savedskin = PlayerPrefs.GetString("MainPlayerSkin","Blue");
+
+        if(System.Enum.TryParse(savedskin, out NPCSkin skin)){
+            selectedSkin = skin;
+        }
+        else{
+            selectedSkin = NPCSkin.Blue;
+        }
+
+        if(animatorControllers != null &&animatorControllers.Length > 0)
+        {
+            int skinIndex = (int)selectedSkin;
+            if(animator != null &&skinIndex < animatorControllers.Length)
+            {
+                animator.runtimeAnimatorController = animatorControllers[skinIndex];
+            }
+        }
+        
     }
 }

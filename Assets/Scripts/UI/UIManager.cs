@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;  
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject inventory;
     public GameObject pauseMenu;
-    public GameObject statsPanel;
+    public GameObject StatsPanel;
+    public GameObject PauseMenuButton;
 
     public TMP_Text moneyCounterTxt;
     public TMP_Text meatCounterTxt;
@@ -46,7 +48,16 @@ public class UIManager : MonoBehaviour
 
     public void OpenOrCloseStatsPlayer()
     {
-        statsPanel.SetActive(!statsPanel.activeSelf);
+        if(StatsPanel.activeSelf == true)
+        {
+            StatsPanel.GetComponent<Animator>().Play("Close");
+        }
+        else
+        {
+            StatsPanel.SetActive(true);
+            StatsPanel.GetComponent<Animator>().Play("Open");   
+        }
+        
     }
 
     public void updateMoneyCounter(int amount)
@@ -81,12 +92,19 @@ public class UIManager : MonoBehaviour
     public void PauseGame()
     {
         pauseMenu.SetActive(true);
+        PauseMenuButton.SetActive(false);
         Time.timeScale = 0f; //Detiene el tiempo en el juego
     }
 
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
+        PauseMenuButton.SetActive(true);
         Time.timeScale = 1;
+    }
+
+    public void GoToMainMenu(){
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 }
